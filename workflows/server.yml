@@ -1,5 +1,6 @@
 steps:
   - run:
+      name: Install dependencies
       image: 'ruby:2.4.2-alpine'
       cache: true
       source:
@@ -10,9 +11,8 @@ steps:
         gem install bundler
         cd app
         bundle install
-        ls
-      name: Install dependencies
   - service :
+      name: Run Application
       step: Install dependencies
       script: |-
         foreman start -d /app
@@ -24,7 +24,6 @@ steps:
       volumes:
         - mountPath: /app/src
           hostPath: ./src
-
       ports:
         - container: 5000
           external: 31001
